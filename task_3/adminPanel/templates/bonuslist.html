@@ -1,0 +1,182 @@
+{% extends 'homePage.html' %}
+{% load widget_tweaks %}    
+{% block content %}
+
+<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="true">
+    <div class="container-fluid py-1 px-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+          <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+          <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Bonus</li>
+        </ol>
+        <h6 class="font-weight-bolder mb-0">{{data}}</h6>
+      </nav>
+      <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-0" id="navbar">
+        <ul class="navbar-nav  ms-md-auto pe-md-3 d-flex align-items-center">
+          {% if not request.user.is_superuser %}
+          <li class="nav-item d-flex align-items-center me-2">
+            <a href="{% url 'user_hom' %}" class="nav-link text-body font-weight-bold d-flex border rounded ">
+              <span class="material-icons">
+                shopping_bag
+              </span>
+              <span class="d-sm-inline d-none">Shop</span>
+            </a>
+          </li>
+          {% endif %}
+          <li class="nav-item d-flex align-items-center">
+            <a  data-bs-toggle="modal" data-bs-target="#logoutModal" class="nav-link text-body font-weight-bold d-flex border rounded ">
+              <span class="material-icons">
+                directions_run
+              </span>
+              <span class="d-sm-inline d-none">LOGOUT</span>
+            </a>
+          </li>
+
+          <!-- Modal -->
+          <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">LOGOUT......?</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p class="text-center">
+                    
+                    <span class="material-icons text-danger" style="font-size: 5rem;">
+                      warning
+                      </span>
+                  </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                  <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <li class="nav-item d-flex align-items-center ms-2">
+            <a href="#" class="nav-link text-body font-weight-bold d-flex border rounded ">
+              <span class="material-icons">
+                account_circle
+              </span>
+              <span class="d-sm-inline d-none">Profile</span>
+            </a>
+          </li>
+          <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+            <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+              <div class="sidenav-toggler-inner">
+                <i class="sidenav-toggler-line"></i>
+                <i class="sidenav-toggler-line"></i>
+                <i class="sidenav-toggler-line"></i>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- End Navbar -->
+  <div class="container-fluid py-4">
+
+
+    {% comment %} <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Launch demo modal
+      </button>
+       {% endcomment %}
+      <!-- Modal -->
+      {% for i in table %}
+        <div class="modal fade" id="exampleModal{{i.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+              <form method="POST">
+                  <div class="form-group">
+                      {% comment %} <label for="bonus-id" class="col-form-label" style="hidden"></label> {% endcomment %}
+                      {% csrf_token %}
+                      {% render_field badgeconfig_form.badgeid value=i.id %}
+                      amount
+                      {% render_field badgeconfig_form.badgeamount value=i.badgeamount %} <br>
+                      
+                      bonus
+                      {% render_field badgeconfig_form.sponsorbonus value=i.sponsorbonus %} <br>
+                    </div>
+                    
+                    {% comment %} <div class="form-group">
+                      <label for="message-text" class="col-form-label">Message:</label>
+                      <textarea class="form-control" id="message-text"></textarea>
+                    </div> {% endcomment %}
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-dark " data-bs-dismiss="modal">Close</button>
+                      <input type="submit" class="btn btn-primary" value="Save">
+              </form>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+
+
+
+
+<div class="row">
+    <div class="col-12">
+      <div class="card my-4">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+          <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+            <h6 class="text-white text-capitalize ps-3">Bonus Data</h6>
+          </div>
+        </div>
+        <div class="card-body px-0 pb-2">
+          <div class="table-responsive p-0" style="max-height: 33rem;">
+            <table class="table align-items-center mb-0">
+              <thead>
+                <tr>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">#</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Badge</th>
+                  <th class=" text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 px-2">Badge Amount</th>
+                  <th class=" text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 px-2">Sponsor Bonus</th>
+                  <th class=" text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 px-2"> </th>
+                  
+                
+                </tr>
+              </thead>
+              <tbody>
+            {% for data in table %}
+            <tr>
+            <td>
+                <h6 class="mb-0 text-sm ms-3">{{forloop.counter0|add:1}}</h6>
+            </td>
+            <td>
+                
+                {% if data.badge == 0 %}
+                  <p class="text-xs font-weight-bold mb-0">BRONZE</p>
+                {% elif data.badge == 1 %}
+                  <p class="text-xs font-weight-bold mb-0">SILVER</p>
+                {% elif data.badge == 2 %}
+                  <p class="text-xs font-weight-bold mb-0">GOLD</p>
+                {% elif data.badge == 3 %}
+                  <p class="text-xs font-weight-bold mb-0">PLATINUM</p>
+                {% elif data.badge == 4 %}
+                  <p class="text-xs font-weight-bold mb-0">DIAMOND</p>
+                {%endif%}
+            </td>
+            <td>
+                <p class="text-xs font-weight-bold mb-0">{{data.badgeamount}}</p>
+            </td>
+            <td>
+                <p class="text-xs font-weight-bold mb-0">{{data.sponsorbonus}}</p>
+            </td>
+            <td>
+                <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal{{data.id}}">EDIT</a> 
+            </td>
+            </tr>
+            {% endfor %}
+
+            {% endblock content %}
+     

@@ -1,0 +1,363 @@
+{% extends "homePage.html" %}
+
+
+{% block content %}
+
+
+
+ <!-- Navbar -->
+    
+ <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl  "  id="navbarBlur" data-scroll="true">
+  <div class="container-fluid py-1 px-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>
+      </ol>
+      <h6 class="font-weight-bolder mb-0">Dashboard</h6>
+    </nav>
+    <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-0" id="navbar">
+      <ul class="navbar-nav  ms-md-auto pe-md-3 d-flex align-items-center">
+        {% if not request.user.is_superuser %}
+        <li class="nav-item d-flex align-items-center me-2">
+          <a href="{% url 'user_hom' %}" class="nav-link text-body font-weight-bold d-flex border rounded ">
+            <span class="material-icons">
+              shopping_bag
+            </span>
+            <span class="d-sm-inline d-none">Shop</span>
+          </a>
+        </li>
+        {% endif %}
+        <li class="nav-item d-flex align-items-center">
+          <a  data-bs-toggle="modal" data-bs-target="#logoutModal" class="nav-link text-body font-weight-bold d-flex border rounded ">
+            <span class="material-icons">
+              directions_run
+            </span>
+            <span class="d-sm-inline d-none">LOGOUT</span>
+          </a>
+        </li>
+
+        <!-- Modal -->
+        <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">LOGOUT......?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p class="text-center">
+                    
+                  <span class="material-icons text-danger" style="font-size: 5rem;">
+                    warning
+                    </span>
+                </p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+          <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+            <div class="sidenav-toggler-inner">
+              <i class="sidenav-toggler-line"></i>
+              <i class="sidenav-toggler-line"></i>
+              <i class="sidenav-toggler-line"></i>
+            </div>
+          </a>
+        </li>
+        <li class="nav-item px-3 d-flex align-items-center">
+          <a href="javascript:;" class="nav-link text-body p-0">
+            <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- End Navbar -->
+<div class="container-fluid py-4">
+
+<div class="row">
+  {% if request.user.is_superuser %}
+  <div class="col-xl-3 col-sm-6 pb-5 mb-xl-0 mb-4">
+    <div class="card">
+      <div class="card-header p-3 pt-2">
+        <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+          <i class="material-icons opacity-10">person</i>
+        </div>
+        <div class="text-end pt-1">
+          <p class="text-sm mb-0 text-capitalize">Total User</p>
+          <h4 class="mb-0">{{count}}</h4>
+        </div>
+      </div>
+      <hr class="dark horizontal my-0">
+      <div class="card-footer p-3">
+        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">{{lastuser}}</span> is the last user</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 pb-5 mb-xl-0 mb-4">
+    <div class="card">
+      <div class="card-header p-3 pt-2">
+        <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
+          <i class="material-icons opacity-10">inventory_2</i>
+        </div>
+        <div class="text-end pt-1">
+          <p class="text-sm mb-0 text-capitalize">Total Product</p>
+          <h4 class="mb-0">{{stockcount}}</h4>
+        </div>
+      </div>
+      <hr class="dark horizontal my-0">
+      <div class="card-footer p-3">
+        <p class="mb-0"><span class="text-success text-sm font-weight-bolder"> {{laststock}}</span> is the last added stock</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 pb-5">
+    <div class="card">
+      <div class="card-header p-3 pt-2">
+        <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
+          <i class="material-icons opacity-10">shopping_basket</i>
+        </div>
+        <div class="text-end pt-1">
+          <p class="text-sm mb-0 text-capitalize">Ecommerce Sales</p>
+          <h4 style="display: flex; justify-content: flex-end; align-items: center;">
+            <span class="material-icons">
+              currency_rupee
+            </span>
+            <span class="mb-0">{{totalsale}}</span>
+          </h4>
+        </div>
+      </div>
+      <hr class="dark horizontal my-0">
+      <div class="card-footer p-3">
+        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+5% </span>than yesterday</p>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  <div class="col-xl-3 col-sm-6 pb-5 mb-xl-0 mb-4">
+    <div class="card">
+      <div class="card-header p-3 pt-2">
+        <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+          <i class="material-icons opacity-10">account_balance_wallet</i>
+        </div>
+        <div class="text-end pt-1">
+          <p class="text-sm mb-0 text-capitalize">Wallet Balance</p>
+          <h4 style="display: flex; justify-content: flex-end; align-items: center;">
+            <span class="material-icons">
+              currency_rupee
+            </span>
+            <span class="mb-0">{{balance}}</span>
+          </h4>
+        </div>
+      </div>
+      <hr class="dark horizontal my-0">
+      <div class="card-footer p-3">
+        <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-2%</span> than yesterday</p>
+      </div>
+    </div>
+  </div>
+  
+  
+  {% if not request.user.is_superuser %}
+  <div class="col-xl-3 col-sm-6 pb-5">
+    <div class="card">
+      <div class="card-header p-3 pt-2">
+        <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
+          <i class="material-icons opacity-10">sell</i>
+        </div>
+        <div class="text-end pt-1">
+          <p class="text-sm mb-0 text-capitalize">Personal Sale</p>
+          <h4 style="display: flex; justify-content: flex-end; align-items: center;">
+            <span class="material-icons">
+              currency_rupee
+            </span>
+            <span class="mb-0">{{personal_sale}}</span>
+          </h4>
+        </div>
+      </div>
+      <hr class="dark horizontal my-0">
+      <div class="card-footer p-3">
+        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+5% </span>than yesterday</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-3 col-sm-6 pb-5">
+    <div class="card">
+      <div class="card-header p-3 pt-2">
+        <div class="icon icon-lg icon-shape bg-gradient-secondary shadow-info text-center border-radius-xl mt-n4 position-absolute">
+          <i class="material-icons opacity-10">diversity_3</i>
+        </div>
+        <div class="text-end pt-1">
+          <p class="text-sm mb-0 text-capitalize">Downline Sale</p>
+          <h4 style="display: flex; justify-content: flex-end; align-items: center;">
+            <span class="material-icons">
+              currency_rupee
+            </span>
+            <span class="mb-0">{{downline_sale}}</span>
+          </h4>
+        </div>
+      </div>
+      <hr class="dark horizontal my-0">
+      <div class="card-footer p-3">
+        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+5% </span>than yesterday</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 pb-5">
+    <div class="card ">
+      <div class="card-header p-3 pt-2">
+        <div class="icon icon-lg icon-shape bg-gradient-primary shadow-info text-center border-radius-xl mt-n4 position-absolute">
+          <i class="material-icons opacity-10">badge</i>
+        </div>
+        <div class="text-end pt-1">
+          <p class="text-sm mb-0 text-capitalize">Current Badge</p>
+          <h4 style="display: flex; justify-content: flex-end; align-items: center;">
+            <span class="material-icons">
+              
+            </span>
+            <span class="mb-0">{{badge}}</span>
+          </h4>
+          
+        </div>
+      </div>
+      <hr class="dark horizontal my-0">
+      <div class="card-footer p-3">
+        <p class="mb-0">Bonus &nbsp<span class="text-success text-sm font-weight-bolder">{{totalbonus}}</span></p>
+      </div>
+    </div>
+  </div>
+
+  {% endif %}
+</div>
+
+
+
+
+<div class="row mb-4 mt-4">
+  <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
+    <div class="card"  >
+      <div class="card-header pb-0">
+        <div class="row">
+          <div class="col-lg-6 col-7">
+            <h6>Recent purchase</h6>
+          </div>
+        </div>
+      </div>
+      <div class="card-body px-0 pb-2">
+        <div class="table-responsive">
+          <table class="table align-items-center mb-0">
+            <thead>
+              <tr>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Product Name</th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Quantity</th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in lastsale %}
+                  <tr>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">{{i.UserName}}</h6>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">{{i.ProductName}}</h6>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">{{i.Quantity}}</h6>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">{{i.TotalPrice}}</h6>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4 col-md-6">
+    <div class="card h-100">
+      <div class="card-header pb-0">
+        <h6>Rank overview</h6>
+        
+      </div>
+      <div class="card-body p-3">
+        <div class="timeline timeline-one-side">
+          <div class="timeline-block mb-3">
+            <span class="timeline-step">
+              <i class="material-icons">stars </i>
+            </span>
+            <div class="timeline-content">
+              <h6 class="text-dark text-sm font-weight-bold mb-0">Bronze</h6>
+              <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">22 DEC 7:20 PM</p>
+            </div>
+          </div>
+          <div class="timeline-block mb-3">
+            <span class="timeline-step">
+                <i class="material-icons">stars</i>
+            </span>
+            <div class="timeline-content">
+              <h6 class="text-dark text-sm font-weight-bold mb-0">Silver</h6>
+              <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">21 DEC 11 PM</p>
+            </div>
+          </div>
+          <div class="timeline-block mb-3">
+            <span class="timeline-step">
+              <i class="material-icons">stars</i>
+            </span>
+            <div class="timeline-content">
+              <h6 class="text-dark text-sm font-weight-bold mb-0">Gold</h6>
+              <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">21 DEC 9:34 PM</p>
+            </div>
+          </div>
+          <div class="timeline-block mb-3">
+            <span class="timeline-step">
+              <i class="material-icons">stars</i>
+            </span>
+            <div class="timeline-content">
+              <h6 class="text-dark text-sm font-weight-bold mb-0">Platinum</h6>
+              <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">20 DEC 2:20 AM</p>
+            </div>
+          </div>
+          <div class="timeline-block mb-3">
+            <span class="timeline-step">
+              <i class="material-icons" >stars</i>
+            </span>
+            <div class="timeline-content">
+              <h6 class="text-dark text-sm font-weight-bold mb-0">Diamond</h6>
+              <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">18 DEC 4:54 AM</p>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zxx">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ogani | Template</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+    
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="../../static/css/user_css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../../static/css/user_css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../../static/css/user_css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="../../static/css/user_css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="../../static/css/user_css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="../../static/css/user_css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="../../static/css/user_css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="../../static/css/user_css/style.css" type="text/css">
+    <link id="pagestyle" href="{% static 'css/material-dashboard.css' %}" rel="stylesheet" />
+
+
+
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Humberger Begin -->
+    <div class="humberger__menu__overlay"></div>
+    <div class="humberger__menu__wrapper">
+    
+        <div class="humberger__menu__widget">
+            <div class="header__top__right__language">
+                {%if request.user.is_authenticated%}
+                <span><i class="fa fa-user"></i>  Dashboard</span>
+                {%else%}
+                <span><i class="fa fa-user"></i>  Login</span>
+                {%endif%}
+                <span class="arrow_carrot-down"></span>
+                <ul>
+                    {%if request.user.is_authenticated%}
+                    <li ><a href="{% url 'login' %}"><i class="fa fa-user"></i>Dashboard</a></li>
+                    {% comment %} <li><a href="{% url 'register' %}"><i class="fa fa-user"></i>Register</a></li> {% endcomment %}
+                    {%else%}
+                    <li><a href="{% url 'login' %}"><i class="fa fa-user"></i>Login</a></li>
+                    <li><a href="{% url 'register' %}"><i class="fa fa-user"></i>Register</a></li>
+                    {%endif%}
+                </ul>
+            </div>
+
+        </div>
+        <nav class="humberger__menu__nav mobile-menu">
+            <ul>
+                <li class="text-primary"><a href="{% url 'user_hom'%}">Home</a></li>
+                <li><a href="{% url 'user_shop'%}">Shop</a></li>
+                
+            </ul>
+        </nav>
+        <div id="mobile-menu-wrap"></div>
+    </div>
+    <!-- Humberger End -->
+
+    <!-- Header Section Begin -->
+    <header class="header bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="header__logo">
+                        <a href="{%url 'user_hom'%}" class="text-dark h5 mt-2">SARA E-COMMERCE</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <nav class="header__menu">
+                        <ul>
+                            <li class="active"><a href="{% url 'user_hom'%}">Home</a></li>
+                            <li><a href="{% url 'user_shop'%}">Shop</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    
+                        <div class="header__top__right">
+                            
+                            <div class="header__top__right__language mt-2 pt-1">
+                                {%if request.user.is_authenticated%}
+                                <span><i class="fa fa-user"></i>  Dashboard</span>
+                                {%else%}
+                                <span><i class="fa fa-user"></i>  Login</span>
+                                {%endif%}
+                                <span class="arrow_carrot-down"></span>
+                                <ul>
+                                    {%if request.user.is_authenticated%}
+                                    <li><a href="{% url 'login' %}"><i class="fa fa-user"></i>Dashboard</a></li>
+                                    {% comment %} <li><a href="{% url 'register' %}"><i class="fa fa-user"></i>Register</a></li> {% endcomment %}
+                                    {%else%}
+                                    <li><a href="{% url 'login' %}"><i class="fa fa-user"></i>Login</a></li>
+                                    <li><a href="{% url 'register' %}"><i class="fa fa-user"></i>Register</a></li>
+                                    {%endif%}
+                                </ul>
+                            </div>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+            <div class="humberger__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+
+    <!-- Hero Section Begin -->
+    <section class="hero my-auto p-0 mt-5" style="height:40rem;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="hero__item set-bg" >
+                        <div class="hero__text">
+                            <span></span>
+                            <h2>Quality Products <br />100% Trustable</h2>
+                            <p>Free Pickup and Delivery Available</p>
+                            <a href="{%url 'user_shop' %}" class="primary-btn">SHOP NOW</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero__item set-bg" >
+                        <div class="hero__text">
+                           <img src="https://img.freepik.com/free-vector/flat-people-order-food-online-grocery-shopping-from-mobile-application-internet-purchases-with-home-delivery-from-supermarket-store-smartphone-screen-with-buy-button-basket-full-products_88138-856.jpg?w=1380&t=st=1664454435~exp=1664455035~hmac=5189a92cb6f1e50f50c86d8273cda39f464c9665e74343f088f690f9723bfdbb">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+   
+    <!-- Featured Section Begin -->
+    <section class="featured spad p-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h2>Featured Product</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row featured__filter">
+                {%for prod in product%}
+                {%if forloop.counter <= 4 %}
+                <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
+                    <div class="featured__item shadow-sm p-4 mt-4">
+                        <div class="featured__item__pic set-bg" style=" background-position: center; background-size: 12rem;" data-setbg="{{prod.Image_Link}}">
+                            <ul class="featured__item__pic__hover ">
+                                <li class="me-4"><a href="{%url 'user_shop'%}"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="featured__item__text">
+                            <h6><a href="{%url 'user_shop'%}">{{prod.Product_name}}</a></h6>
+                            {% comment %} <h5>${{prod.Price}}</h5> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+                {%endif%}
+                {%endfor%}
+                
+            </div>
+        </div>
+    </section>
+    <!-- Featured Section End -->
+
+    
+
+    <!-- Footer Section Begin -->
+    <footer class="footer spad">
+        <div class="container">                
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer__copyright">
+                        <div class="footer__copyright__text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved<i class="" aria-hidden="true"></i> <a href="https://colorlib.com" target="_blank"></a>
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
+                        <div class="footer__copyright__payment"><img src="../../static/img/user_img/payment-item.png" alt=""></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+    <script src="../../static/js/user_js/jquery-3.3.1.min.js"></script>
+    <script src="../../static/js/user_js/bootstrap.min.js"></script>
+    <script src="../../static/js/user_js/jquery.nice-select.min.js"></script>
+    <script src="../../static/js/user_js/jquery-ui.min.js"></script>
+    <script src="../../static/js/user_js/jquery.slicknav.js"></script>
+    <script src="../../static/js/user_js/mixitup.min.js"></script>
+    <script src="../../static/js/user_js/owl.carousel.min.js"></script>
+    <script src="../../static/js/user_js/main.js"></script>
+
+
+
+</body>
+
+</html>

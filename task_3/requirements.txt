@@ -1,0 +1,6 @@
+django == 2.2.8
+psycopg2==2.8.6
+django-widget-tweaks==1.4.12
+django-environ
+gunicorn==20.0.4
+

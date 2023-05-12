@@ -1,0 +1,145 @@
+{% extends 'homePage.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<!-- Navbar -->
+
+<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="true">
+    <div class="container-fluid py-1 px-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+          <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+          <li class="breadcrumb-item text-sm text-dark active" aria-current="page">{{data}}</li>
+        </ol>
+        <h6 class="font-weight-bolder mb-0">{{data}} Form</h6>
+      </nav>
+      <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-0" id="navbar">
+        <ul class="navbar-nav  ms-md-auto pe-md-3 d-flex align-items-center">
+          <li class="nav-item d-flex align-items-center">
+            <a  data-bs-toggle="modal" data-bs-target="#logoutModal" class="nav-link text-body font-weight-bold d-flex border rounded ">
+              <span class="material-icons">
+                directions_run
+              </span>
+              <span class="d-sm-inline d-none">LOGOUT</span>
+            </a>
+          </li>
+
+          <!-- Modal -->
+          <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">LOGOUT......?</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <span class="material-icons text-danger" style="font-size: 5rem;">
+                    warning
+                    </span>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                  <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+            <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+              <div class="sidenav-toggler-inner">
+                <i class="sidenav-toggler-line"></i>
+                <i class="sidenav-toggler-line"></i>
+                <i class="sidenav-toggler-line"></i>
+              </div>
+            </a>
+          </li>
+          <li class="nav-item px-3 d-flex align-items-center">
+            <a href="javascript:;" class="nav-link text-body p-0">
+              <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- End Navbar -->
+  <div class="container-fluid py-4">
+  <div class="admin-add-main ">
+    <form class='admin-add-user shadow-sm px-5 pt-4' method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+          <p class="m-1">
+            {{ field.label_tag }}<br>
+            {{ field }}
+          </p>
+        {% endfor %}
+        
+        <input style="width:15rem" class="btn bg-gradient-primary submit mt-4 mb-5" type="submit" value="submit">
+    </form>
+    {% if messages %}
+    <div class="add-msg bg-success text-white alert shadow">
+            
+            <ul class="messages">
+                {% for message in messages %}
+                <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+                {% endfor %}
+            </ul>
+            <p id="close"><span class="material-icons">
+              close
+              </span></p>
+        
+            
+    </div>
+    {% endif %}
+  </div>
+<style>
+    .admin-add-main{
+        position: relative;
+        display:flex;
+        justify-content:center;
+    }
+    .add-msg{
+        position:absolute;
+        top:0;
+        width:40rem;
+        height:5rem;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        border-radius:.5rem;
+    }
+    .add-msg p{
+        padding:0rem 2rem 0 0;
+        font-size:2rem;
+        cursor: pointer;
+
+    }
+    .add-msg ul{
+        padding:0 0 0 1rem;
+        font-size:1rem;
+        list-style: none;
+    }
+    .admin-add-user{
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+    }
+    .admin-add-user input{
+
+        width: 25rem;
+    }
+
+</style>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+    $('#close').on('click', function(e) { 
+        $(this).parent('.alert').remove(); 
+        
+     });
+     $('.alert').ready( function() {
+        $('.alert').delay(1000).fadeOut("fast");
+      });
+</script>
+
+    
+{% endblock content %}

@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+
+
+{% block title %}
+shop checkout
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row ">
+    <div class="card " style="width: 50rem;">
+
+        <div class="row">
+            <div class="col-md-8 cart">
+                <div class="title">
+                    <div class="row">
+                        <div class="col">
+                            <h4><b>Checkout</b></h4>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="text-center">
+                    <div class="card">
+                        <div style="width: 10rem;height: 20rem; padding-top:3rem ; margin: auto;">
+                            <img src="{{ product.Image_Link }}" alt="Product" style="width: 100%;">
+                        </div>
+                        <div class="container row justify-content-between text-center">
+                            <h4 class="my-auto py-3" id="id_product_name"><b> {{ product.Product_name }} </b></h4>
+                            <h6 class="my-auto py-3" id="id_product_price">&euro; {{ product.Price }}</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="back-to-shop"><a href="{% url 'user_shop' %}">&leftarrow;<span class="text-muted"> Back to
+                            shop</span></a></div>
+
+            </div>
+
+            <div class="col-md-4 summary">
+                <div>
+                    <h5><b>Summary</b></h5>
+                </div>
+
+                <hr>
+
+                <form method="post">
+                    {% csrf_token %}
+
+
+                    
+                    {% render_field checkout_form.UserName type="hidden" value=username %}
+
+                    {% render_field checkout_form.ProductId type="hidden" value=product.id %}
+
+                    {% render_field checkout_form.ProductName type="hidden" value=product.Product_name %}
+
+                    {% render_field checkout_form.TotalPrice type="hidden"%}
+
+                    {% render_field checkout_form.Sponsor type="hidden" value=sponsor %}
+
+                    <!-- Default switch -->
+
+
+                    <div>
+                        <p>GIVE COUPON CODE</p>
+                        {% render_field checkout_form.CouponCode disabled=True placeholder="enter code if have" %}
+
+                    </div>
+
+                    <p>QUANTITY</p>
+                    <div class="row">
+                        {% render_field checkout_form.Quantity min="1" max=product.Quantity placeholder="enter a quantity" %}
+                    </div>
+
+
+                    <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                        <div class="col">TOTAL PRICE</div>
+                        <div class="col text-right" id="id_total_price">&euro; {{ product.Price }}</div>
+                    </div>
+
+                    <!-- button : submit  -->
+                    <input type="submit" class="btn" value="CHECKOUT">
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card ml-3 " style="width: 20rem; padding: 4vh 5vh;">
+
+        <h5 class=" mb-1">currently buying with</h5>
+
+        <h2 class=" mb-3 text-success"><b id="id_source">Wallet</b></h2>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input"  onclick="changeSource()" id="customSwitches">
+            <label class="custom-control-label" for="customSwitches">change to buy with coupon</label>
+        </div>
+
+
+        <!-- <p class="text-muted mb-1">* keep CouponCode flied blank to buy with wallet</p>
+                        <p class="text-muted mb-0">* Enter Couponcode for purchase with couponcode </p> -->
+
+    </div>
+</div>
+
+
+<script>
+
+    print = console.log
+
+    const id_quantity = document.getElementById("id_Quantity")
+    const id_CouponCode = document.getElementById("id_CouponCode");
+    const id_total_price = document.getElementById("id_TotalPrice")
+    const id_total = document.getElementById("id_total_price")
+    const id_coupon_enable = document.getElementById("customSwitches")
+    const id_source = document.getElementById("id_source")
+
+    const product_price = '{{ product.Price }}'
+
+    id_quantity.onchange = () => {
+
+        let total_price = product_price * id_quantity.value
+        id_total.innerHTML = "&euro; " + total_price
+        id_total_price.value = total_price
+        print("total price : ", total_price, " quantity : ", id_quantity.value)
+
+    }
+
+    // increment
+    function increment() {
+        document.getElementById('id_Quantity').stepUp();
+    }
+    // decrement
+    function decrement() {
+        document.getElementById('id_Quantity').stepDown();
+    }
+
+    id_CouponCode.onchange = () => {
+
+        //document.getElementById("id_para_source").innerHTML = "Couponcode"
+
+        print("hid")
+
+        if (id_CouponCode.value == "") { print("null") }
+    }
+
+
+    let changeSource = () => {
+
+        if ( id_coupon_enable.checked == true ) {
+            id_source.innerHTML = "Coupon"
+            id_CouponCode.disabled = false
+            
+        }
+        else {
+            id_source.innerHTML = "Wallet"
+            id_CouponCode.disabled = true
+            id_CouponCode.value = ""
+
+        }
+    }
+
+
+
+
+
+</script>
+
+
+{% endblock %}
